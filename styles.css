@@ -1,0 +1,123 @@
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+}
+
+.sub-title {
+    width: 30%;
+    text-align: center;
+}
+
+.subjects {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.textbox {
+    width: 30%;
+    height: 50px;
+    border: 0px;
+    border-radius: 5px;
+    font-size: 40px;
+}
+
+.terms {
+    background-color: rgb(227, 227, 227);
+    border-radius: 8px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+
+.button {
+    margin-top: 50px;
+    width: 100%;
+    height: 50px;
+    font-size: 40px;
+    border-radius: 20px;
+}
+
+.scount {
+    text-align: center;
+    padding-bottom: 20px;
+    
+}
+
+.ccount {
+    text-align: center;
+}
+
+.lowerbutton {
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(14, 150, 247, 1);
+    color: white;
+    border: 0px;
+    border-radius: 4px;
+}
+
+.lowerbuttonc {
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(14, 150, 247, 1);
+    color: white;
+    border: 0px;
+    border-radius: 4px;
+}
+
+.upperbutton {
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(14, 150, 247, 1);
+    color: white;
+    border: 0px;
+    border-radius: 4px;
+}
+
+.upperbuttonc {
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(14, 150, 247, 1);
+    color: white;
+    border: 0px;
+    border-radius: 4px;
+}
+b {
+    text-align: center;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.disabled {
+    background-color: rgba(14, 150, 247, 0.336) !important; 
+}
+
+.switch-theme {
+    background-color: rgba(14, 150, 247, 0);
+    border: 0px;
+}
+
+.body-dark{
+    background-color: black !important;
+    color: white !important;
+}
+
+.terms-dark{
+    background-color: rgb(34 34 34);
+}
