@@ -155,13 +155,13 @@ function cscheckevent() {
     if (cscheck.checked) {
         var t = document.getElementsByClassName("sub-content")
         for (x = 0; x < t.length;x++){
-            t[x].innerHTML = t[x].innerHTML.replace("Final Grade","Grade Credit")
+            t[x].innerHTML = t[x].innerHTML.replace("Final Mark","Grade Credit")
         }
     }
     else {
         var t = document.getElementsByClassName("sub-content")
         for (x = 0; x < t.length;x++){
-            t[x].innerHTML = t[x].innerHTML.replace("Grade Credit","Final Grade")
+            t[x].innerHTML = t[x].innerHTML.replace("Grade Credit","Final Mark")
         }
     }
 }
