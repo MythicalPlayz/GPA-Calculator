@@ -82,7 +82,7 @@ function increaseCourses(parent,but){
     const clone = curdiv.cloneNode(true)
     parent.appendChild(clone)
     var textbox = clone.getElementsByClassName("textbox")
-    console.log(textbox) //debug
+    console.debug(textbox) //some reason it fixes the bug /shrug
     for (x = 0; x < textbox.length;x++)
     textbox[x].value = ""
     but.classList.remove("disabled");
