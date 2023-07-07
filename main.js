@@ -1,3 +1,25 @@
+function finalGradeToCredit(num){
+    if (num >= 90)
+    return 4
+    if (num >= 85)
+    return 3.7
+    if (num >= 80)
+    return 3.3
+    if (num >= 75)
+    return 3
+    if (num >= 70)
+    return 2.7
+    if (num >= 65)
+    return 2.4
+    if (num >= 60)
+    return 2.2
+    if (num >= 50)
+    return 2
+   return 0
+}
+
+var cscheck = document.getElementById("cscheck")
+
 function calculateGPA(){
     var terms = document.getElementsByClassName("terms")
     var gpas = []
@@ -6,31 +28,43 @@ function calculateGPA(){
     var tcredit = 0
     var thour = 0
     for (j = 0; j < main.length;j++){
-    var credit = main[j].getElementsByClassName("credit")[0].value
+    var grade, credit
+    grade = main[j].getElementsByClassName("grade")[0].value
     var hour = main[j].getElementsByClassName("hour")[0].value
-    if (credit === "" || hour === ""){
+    if (grade === "" || hour === ""){
+        alert("Missing Info was found!")
         return -1
     }
-    credit = Math.abs(credit)
+    grade = Math.abs(grade)
+    if (!cscheck.checked)
+    credit = finalGradeToCredit(grade)
+    else
+    credit = grade
     hour = Math.abs(hour)
     tcredit += credit * hour
     thour += hour
     }
-    gpas.push((tcredit / thour).toFixed(2))
+    gpas.push(parseFloat((tcredit / thour).toFixed(2)))
 }
-const l = gpas.length
+
 var fgpa = 0
-while (gpas.length > 0){
-    fgpa += parseFloat(gpas[gpas.length - 1])
-    gpas.pop()
+for (x = 0; x < gpas.length;x++){
+    fgpa += gpas[x]
 }
- fgpa = (fgpa / l).toFixed(2)
-return fgpa
+    console.log(fgpa)
+ fgpa = parseFloat((fgpa / gpas.length).toFixed(2))
+ gpas.push(fgpa)
+ return gpas
 }
 const Button = document.getElementsByClassName("button")[0]
 Button.onclick = function(){
 var r = calculateGPA()
-Button.textContent = r
+if (r === -1) return
+var divs = document.getElementsByClassName("terms")
+for (x = 0; x < divs.length;x++){
+    divs[x].getElementsByClassName("igpa")[0].textContent = `Semester GPA: ${r[x]}`
+}
+    document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${r[divs.length]}`
 }
 
 const minSem = 1
@@ -81,6 +115,10 @@ HigBut.onclick = function() {
     const clone = semdiv.cloneNode(true)
     document.getElementsByClassName("main-container")[0].appendChild(clone)
     clone.innerHTML = clone.innerHTML.replace("Semester 1",`Semester ${semcount}`)
+    var v = clone.getElementsByClassName("subjects")
+    for (x = 1; x < v.length;x++){
+        v[x].remove()
+    }
     var c = document.getElementsByClassName("terms")
     c[c.length - 1].getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(clone, c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
     c[c.length - 1].getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
@@ -102,7 +140,6 @@ var toggle = document.getElementsByClassName("switch-theme")[0].onclick = functi
         var c = document.getElementsByClassName("terms")
         for (i = 0; i < c.length;i++)
         c[i].classList.add("terms-dark")
-        document.getElementById("Capa_1").style.fill = "#ffffff"
     }
     else
     {
@@ -110,7 +147,21 @@ var toggle = document.getElementsByClassName("switch-theme")[0].onclick = functi
         var c = document.getElementsByClassName("terms")
         for (i = 0; i < c.length;i++)
         c[i].classList.remove("terms-dark")
-        document.getElementById("Capa_1").style.fill = "#000000"
     }
     isLight = !isLight
+}
+
+function cscheckevent() {
+    if (cscheck.checked) {
+        var t = document.getElementsByClassName("sub-content")
+        for (x = 0; x < t.length;x++){
+            t[x].innerHTML = t[x].innerHTML.replace("Final Mark","Grade Credit")
+        }
+    }
+    else {
+        var t = document.getElementsByClassName("sub-content")
+        for (x = 0; x < t.length;x++){
+            t[x].innerHTML = t[x].innerHTML.replace("Grade Credit","Final Mark")
+        }
+    }
 }
