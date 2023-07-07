@@ -76,6 +76,8 @@ const HigBut = document.getElementsByClassName("upperbutton")[0]
 var semdiv = document.getElementsByClassName("terms")[0]
 var semcount = 1
 
+var curdiv = semdiv.getElementsByClassName("subjects")[0]
+
 function increaseCourses(parent,but){
     const clone = curdiv.cloneNode(true)
     parent.appendChild(clone)
@@ -127,8 +129,6 @@ HigBut.onclick = function() {
     c[c.length - 1].getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
     lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])
 }
-
-var curdiv = semdiv.getElementsByClassName("subjects")[0]
 
 semdiv.getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
 semdiv.getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
