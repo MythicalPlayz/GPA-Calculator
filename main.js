@@ -32,6 +32,7 @@ function calculateGPA(){
     grade = main[j].getElementsByClassName("grade")[0].value
     var hour = main[j].getElementsByClassName("hour")[0].value
     if (grade === "" || hour === ""){
+        console.debug("Getting GPA: Failed")
         alert("Missing Info was found!")
         return -1
     }
@@ -54,6 +55,7 @@ for (x = 0; x < gpas.length;x++){
     console.log(fgpa)
  fgpa = parseFloat((fgpa / gpas.length).toFixed(2))
  gpas.push(fgpa)
+ console.debug("Getting GPA: Success")
  return gpas
 }
 const Button = document.getElementsByClassName("button")[0]
@@ -82,7 +84,7 @@ function increaseCourses(parent,but){
     const clone = curdiv.cloneNode(true)
     parent.appendChild(clone)
     var textbox = clone.getElementsByClassName("textbox")
-    console.debug(textbox) //some reason it fixes the bug /shrug
+    console.debug("Adding Course")
     for (x = 0; x < textbox.length;x++)
     textbox[x].value = ""
     but.classList.remove("disabled");
@@ -96,6 +98,7 @@ function lowerCourses(parent,but){
     if (c.length === 2)
     but.classList.add("disabled");
     c[c.length - 1].remove()
+    console.debug("Removing Course")
 }
 
 LowBut.onclick = function() {
@@ -108,6 +111,7 @@ LowBut.onclick = function() {
     LowBut.classList.add("disabled")
     var c = document.getElementsByClassName("terms")
     c[c.length - 1].remove()
+    console.debug("Removing Semester")
 }
 
 HigBut.onclick = function() {
@@ -129,6 +133,7 @@ HigBut.onclick = function() {
     c[c.length - 1].getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(clone, c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
     c[c.length - 1].getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
     lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])
+    console.debug("Adding Semester")
 }
 
 semdiv.getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
@@ -153,6 +158,7 @@ var toggle = document.getElementsByClassName("switch-theme")[0].onclick = functi
         c[i].classList.remove("terms-dark")
     }
     isLight = !isLight
+    console.debug("Switched Theme")
 }
 
 function cscheckevent() {
@@ -168,4 +174,5 @@ function cscheckevent() {
             t[x].innerHTML = t[x].innerHTML.replace("Grade Credit","Final Mark")
         }
     }
+    console.debug("Switched Settings")
 }
