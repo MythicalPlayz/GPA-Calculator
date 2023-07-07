@@ -79,6 +79,9 @@ var semcount = 1
 function increaseCourses(parent,but){
     const clone = curdiv.cloneNode(true)
     parent.appendChild(clone)
+    var textbox = clone.getElementsByClassName("textbox")
+    for (x = 0; x < textbox.length;x++)
+    textbox[x].value = ""
     but.classList.remove("disabled");
 }
 
