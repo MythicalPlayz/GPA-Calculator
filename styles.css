@@ -168,3 +168,18 @@ body {
         font-size: 24px;
     }
 }
+
+.options {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.option2 {
+    font-size: 24px;
+}
+
+.cscheck {
+    width: 24px;
+    height: 24px;
+}

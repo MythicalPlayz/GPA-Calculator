@@ -18,6 +18,8 @@ function finalGradeToCredit(num){
    return 0
 }
 
+var cscheck = document.getElementById("cscheck")
+
 function calculateGPA(){
     var terms = document.getElementsByClassName("terms")
     var gpas = []
@@ -26,14 +28,18 @@ function calculateGPA(){
     var tcredit = 0
     var thour = 0
     for (j = 0; j < main.length;j++){
-    var grade = main[j].getElementsByClassName("grade")[0].value
+    var grade, credit
+    grade = main[j].getElementsByClassName("grade")[0].value
     var hour = main[j].getElementsByClassName("hour")[0].value
     if (grade === "" || hour === ""){
         alert("Missing Info was found!")
         return -1
     }
     grade = Math.abs(grade)
-    var credit = finalGradeToCredit(grade)
+    if (!cscheck.checked)
+    credit = finalGradeToCredit(grade)
+    else
+    credit = grade
     hour = Math.abs(hour)
     tcredit += credit * hour
     thour += hour
@@ -143,4 +149,19 @@ var toggle = document.getElementsByClassName("switch-theme")[0].onclick = functi
         c[i].classList.remove("terms-dark")
     }
     isLight = !isLight
+}
+
+function cscheckevent() {
+    if (cscheck.checked) {
+        var t = document.getElementsByClassName("sub-content")
+        for (x = 0; x < t.length;x++){
+            t[x].innerHTML = t[x].innerHTML.replace("Final Grade","Grade Credit")
+        }
+    }
+    else {
+        var t = document.getElementsByClassName("sub-content")
+        for (x = 0; x < t.length;x++){
+            t[x].innerHTML = t[x].innerHTML.replace("Grade Credit","Final Grade")
+        }
+    }
 }
