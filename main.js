@@ -1,178 +1,255 @@
-function finalGradeToCredit(num){
-    if (num >= 90)
-    return 4
-    if (num >= 85)
-    return 3.7
-    if (num >= 80)
-    return 3.3
-    if (num >= 75)
-    return 3
-    if (num >= 70)
-    return 2.7
-    if (num >= 65)
-    return 2.4
-    if (num >= 60)
-    return 2.2
-    if (num >= 50)
-    return 2
-   return 0
-}
-
-var cscheck = document.getElementById("cscheck")
-
-function calculateGPA(){
-    var terms = document.getElementsByClassName("terms")
-    var gpas = []
-    for (i = 0; i < terms.length;i++){
-    var main = terms[i].querySelectorAll(".subjects")
-    var tcredit = 0
-    var thour = 0
-    for (j = 0; j < main.length;j++){
-    var grade, credit
-    grade = main[j].getElementsByClassName("grade")[0].value
-    var hour = main[j].getElementsByClassName("hour")[0].value
-    if (grade === "" || hour === ""){
-        console.debug("Getting GPA: Failed")
-        alert("Missing Info was found!")
-        return -1
-    }
-    grade = Math.abs(grade)
-    if (!cscheck.checked)
-    credit = finalGradeToCredit(grade)
-    else
-    credit = grade
-    hour = Math.abs(hour)
-    tcredit += credit * hour
-    thour += hour
-    }
-    gpas.push(parseFloat((tcredit / thour).toFixed(2)))
-}
-
-var fgpa = 0
-for (x = 0; x < gpas.length;x++){
-    fgpa += gpas[x]
-}
-    console.log(fgpa)
- fgpa = parseFloat((fgpa / gpas.length).toFixed(2))
- gpas.push(fgpa)
- console.debug("Getting GPA: Success")
- return gpas
-}
-const Button = document.getElementsByClassName("button")[0]
-Button.onclick = function(){
-var r = calculateGPA()
-if (r === -1) return
-var divs = document.getElementsByClassName("terms")
-for (x = 0; x < divs.length;x++){
-    divs[x].getElementsByClassName("igpa")[0].textContent = `Semester GPA: ${r[x]}`
-}
-    document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${r[divs.length]}`
-}
+const csCheck = document.getElementById("cscheck")
+const gpaButton = document.getElementsByClassName("button")[0]
 
 const minSem = 1
 const maxSem = 12
 
-const LowBut = document.getElementsByClassName("lowerbutton")[0]
-const HigBut = document.getElementsByClassName("upperbutton")[0]
+const decreaseSemestersButton = document.getElementsByClassName("lowerbutton")[0]
+const increaseSemestersButton = document.getElementsByClassName("upperbutton")[0]
 
-var semdiv = document.getElementsByClassName("terms")[0]
+const semdiv = getTerms()[0]
 var semcount = 1
 
-var curdiv = semdiv.getElementsByClassName("subjects")[0]
+const curdiv = semdiv.getElementsByClassName("subjects")[0]
 
-function increaseCourses(parent,but){
-    const clone = curdiv.cloneNode(true)
-    parent.appendChild(clone)
-    var textbox = clone.getElementsByClassName("textbox")
-    console.debug("Adding Course")
-    for (x = 0; x < textbox.length;x++)
-    textbox[x].value = ""
-    but.classList.remove("disabled");
+var isLight = true
+
+function gpaToResult(gpa){
+    if (gpa >= 3.5)
+    return "Excellent"
+    if (gpa >= 3.0)
+    return "Very Good"
+    if (gpa >= 2.5)
+    return "Good"
+    if (gpa >= 2)
+    return "Passable"
+    if (gpa >= 1.5)
+    return "Weak"
+    return "Very Week"
 }
 
-function lowerCourses(parent,but){
-    var c = parent.getElementsByClassName("subjects")
-    if (c.length === 1) {
-        but.classList.add("disabled");
-        return }
-    if (c.length === 2)
-    but.classList.add("disabled");
-    c[c.length - 1].remove()
+
+function finalGradeToCredit(grade){
+    if (grade >= 90)
+    return 4
+    if (grade >= 85)
+    return 3.7
+    if (grade >= 80)
+    return 3.3
+    if (grade >= 75)
+    return 3
+    if (grade >= 70)
+    return 2.7
+    if (grade >= 65)
+    return 2.4
+    if (grade >= 60)
+    return 2.2
+    if (grade >= 50)
+    return 2
+   return 0
+}
+
+
+function getTerms(){
+    return document.getElementsByClassName("terms")
+}
+
+
+function calculateGPA(){
+    let terms = getTerms()
+    let gpas = []
+
+    for (i = 0; i < terms.length;i++){
+        let subjects = terms[i].querySelectorAll(".subjects")
+        let tcredit = 0
+        let thour = 0
+
+            for (j = 0; j < subjects.length;j++){
+                let grade, credit
+                grade = subjects[j].getElementsByClassName("grade")[0].value
+                let hour = subjects[j].getElementsByClassName("hour")[0].value
+
+                if (grade === "" || hour === ""){
+                    console.debug("Getting GPA: Failed")
+                    alert("Missing Info was found!")
+                    return -1
+                }
+
+        grade = Math.abs(grade)
+
+        if (!csCheck.checked)
+            credit = finalGradeToCredit(grade)
+        else
+            credit = grade
+
+        hour = Math.abs(hour)
+        tcredit += credit * hour
+        thour += hour
+        }
+
+    gpas.push(parseFloat((tcredit / thour).toFixed(2)))
+
+    }
+
+    var fgpa = 0
+
+    for (x = 0; x < gpas.length;x++){
+        fgpa += gpas[x]
+    }
+
+    fgpa = parseFloat((fgpa / gpas.length).toFixed(2))
+    gpas.push(fgpa)
+    console.debug("Getting GPA: Success")
+    return gpas
+
+}
+
+
+
+gpaButton.onclick = function(){
+    let result = calculateGPA()
+    if (result === -1) return
+    let terms = getTerms()
+
+    for (x = 0; x < terms.length;x++){
+        terms[x].getElementsByClassName("igpa")[0].textContent = `Semester GPA: ${result[x]}`
+    }
+
+    document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${result[terms.length]}`
+}
+
+
+function increaseCourses(parent,decreaseButton){
+    const cloneCourse = curdiv.cloneNode(true)
+    parent.appendChild(cloneCourse)
+    var textbox = cloneCourse.getElementsByClassName("textbox")
+    console.debug("Adding Course")
+
+    for (x = 0; x < textbox.length;x++)
+        textbox[x].value = ""
+
+    decreaseButton.classList.remove("disabled");
+}
+
+
+function lowerCourses(parent,decreaseButton){
+    let subjects = parent.getElementsByClassName("subjects")
+
+    if (subjects.length === 1) {
+        decreaseButton.classList.add("disabled");
+        return 
+    }
+
+    if (subjects.length === 2)
+        decreaseButton.classList.add("disabled");
+
+    subjects[subjects.length - 1].remove()
     console.debug("Removing Course")
 }
 
-LowBut.onclick = function() {
-    HigBut.classList.remove("disabled")
+
+decreaseSemestersButton.onclick = function() {
+    increaseSemestersButton.classList.remove("disabled")
+
     if (semcount == minSem) {
-        LowBut.classList.add("disabled")
-    return}
+        decreaseSemestersButton.classList.add("disabled")
+        return
+    }
+
     semcount -= 1
+    
     if (semcount === minSem)
-    LowBut.classList.add("disabled")
-    var c = document.getElementsByClassName("terms")
-    c[c.length - 1].remove()
+        decreaseSemestersButton.classList.add("disabled")
+
+    let terms = getTerms()
+    terms[terms.length - 1].remove()
     console.debug("Removing Semester")
 }
 
-HigBut.onclick = function() {
-    LowBut.classList.remove("disabled")
+
+increaseSemestersButton.onclick = function() {
+    decreaseSemestersButton.classList.remove("disabled")
+
     if (semcount == maxSem) {
-        HigBut.classList.add("disabled")
-        return}
-    semcount += 1
-    if (semcount == maxSem)
-        HigBut.classList.add("disabled")
-    const clone = semdiv.cloneNode(true)
-    document.getElementsByClassName("main-container")[0].appendChild(clone)
-    clone.innerHTML = clone.innerHTML.replace("Semester 1",`Semester ${semcount}`)
-    var v = clone.getElementsByClassName("subjects")
-    for (x = 1; x < v.length;x++){
-        v[x].remove()
+        increaseSemestersButton.classList.add("disabled")
+        return
     }
-    var c = document.getElementsByClassName("terms")
-    c[c.length - 1].getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(clone, c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
-    c[c.length - 1].getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])}
-    lowerCourses(clone,c[c.length - 1].getElementsByClassName("lowerbuttonc")[0])
+
+    semcount += 1
+
+    if (semcount == maxSem)
+        increaseSemestersButton.classList.add("disabled")
+
+    const cloneSemester = semdiv.cloneNode(true)
+    document.getElementsByClassName("main-container")[0].appendChild(cloneSemester)
+    cloneSemester.innerHTML = cloneSemester.innerHTML.replace("Semester 1",`Semester ${semcount}`)
+    let subjects = cloneSemester.getElementsByClassName("subjects")
+
+    for (x = 1; x < subjects.length;x++){
+        subjects[x].remove()
+    }
+
+    let terms = getTerms()
+    terms[terms.length - 1].getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(cloneSemester, terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0])}
+    terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(cloneSemester,terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0])}
+    lowerCourses(cloneSemester,terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0])
+    let igpa = cloneSemester.getElementsByClassName("igpa")[0]
+    igpa.textContent = "Semester GPA: N/A"
     console.debug("Adding Semester")
 }
+
+
+document.getElementsByClassName("switch-theme")[0].onclick = function(){
+
+    if (isLight) {
+        document.body.classList.add("body-dark")
+        let terms = getTerms()
+
+        for (i = 0; i < terms.length;i++)
+            terms[i].classList.add("terms-dark")
+
+        console.debug("Switched Theme: Dark")
+    }
+
+    else
+    {
+        document.body.classList.remove("body-dark")
+        let terms = getTerms()
+
+        for (i = 0; i < terms.length;i++)
+            terms[i].classList.remove("terms-dark")
+
+        console.debug("Switched Theme: Light")
+    }
+    isLight = !isLight
+}
+
+
+function cscheckevent() {
+
+    if (csCheck.checked) {
+        let subContents = document.getElementsByClassName("sub-content")
+
+        for (x = 0; x < subContents.length;x++)
+            subContents[x].innerHTML = subContents[x].innerHTML.replace("Final Mark","Grade Credit")
+
+        console.debug("Switched Settings: Use Grade Credit")
+
+    }
+
+    else {
+        let subContents = document.getElementsByClassName("sub-content")
+
+        for (x = 0; x < subContents.length;x++)
+            subContents[x].innerHTML = subContents[x].innerHTML.replace("Grade Credit","Final Mark")
+        
+        console.debug("Switched Settings: Use Final Marks")
+    }
+   
+}
+
 
 semdiv.getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
 semdiv.getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
 lowerCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])
-LowBut.classList.add("disabled")
-
-
-var isLight = true
-var toggle = document.getElementsByClassName("switch-theme")[0].onclick = function(){
-    if (isLight) {
-        document.body.classList.add("body-dark")
-        var c = document.getElementsByClassName("terms")
-        for (i = 0; i < c.length;i++)
-        c[i].classList.add("terms-dark")
-    }
-    else
-    {
-        document.body.classList.remove("body-dark")
-        var c = document.getElementsByClassName("terms")
-        for (i = 0; i < c.length;i++)
-        c[i].classList.remove("terms-dark")
-    }
-    isLight = !isLight
-    console.debug("Switched Theme")
-}
-
-function cscheckevent() {
-    if (cscheck.checked) {
-        var t = document.getElementsByClassName("sub-content")
-        for (x = 0; x < t.length;x++){
-            t[x].innerHTML = t[x].innerHTML.replace("Final Mark","Grade Credit")
-        }
-    }
-    else {
-        var t = document.getElementsByClassName("sub-content")
-        for (x = 0; x < t.length;x++){
-            t[x].innerHTML = t[x].innerHTML.replace("Grade Credit","Final Mark")
-        }
-    }
-    console.debug("Switched Settings")
-}
+decreaseSemestersButton.classList.add("disabled")
