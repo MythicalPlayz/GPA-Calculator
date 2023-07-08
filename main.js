@@ -115,7 +115,7 @@ gpaButton.onclick = function(){
         terms[x].getElementsByClassName("igpa")[0].textContent = `Semester GPA: ${result[x]}`
     }
 
-    document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${result[terms.length]}`
+    document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${result[terms.length]}    Result: ${gpaToResult(result[terms.length])}`
 }
 
 
