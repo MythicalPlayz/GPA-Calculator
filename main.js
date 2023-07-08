@@ -1,4 +1,4 @@
-const csCheck = document.getElementById("cscheck")
+const calcdrop = document.getElementById("calcdrop")
 const gpaButton = document.getElementsByClassName("button")[0]
 
 const minSem = 1
@@ -30,22 +30,61 @@ function gpaToResult(gpa){
 
 
 function finalGradeToCredit(grade){
+
     if (grade >= 90)
-    return 4
+        return 4
+
     if (grade >= 85)
-    return 3.7
+        return 3.7
+
     if (grade >= 80)
-    return 3.3
+        return 3.3
+
     if (grade >= 75)
-    return 3
+        return 3
+
     if (grade >= 70)
-    return 2.7
+        return 2.7
+
     if (grade >= 65)
-    return 2.4
+        return 2.4
+
     if (grade >= 60)
-    return 2.2
+        return 2.2
+
     if (grade >= 50)
-    return 2
+        return 2
+
+   return 0
+}
+
+
+function letterGradeToCredit(value){
+
+    if (value == "A+")
+        return 4
+
+    if (value == "A")
+        return 3.7
+
+    if (value == "B+")
+        return 3.3
+
+    if (value == "B")
+        return 3
+
+    if (value == "C+")
+        return 2.7
+
+    if (value == "C")
+        return 2.4
+
+    if (value == "D+")
+        return 2.2
+
+    if (value == "D")
+        return 2
+
    return 0
 }
 
@@ -65,22 +104,39 @@ function calculateGPA(){
         let thour = 0
 
             for (j = 0; j < subjects.length;j++){
-                let grade, credit
-                grade = subjects[j].getElementsByClassName("grade")[0].value
-                let hour = subjects[j].getElementsByClassName("hour")[0].value
+                let grade, credit, hour
+                if (calcdrop.value !== "Grade"){
+                    grade = subjects[j].getElementsByClassName("grade")[0].value
+                    hour = subjects[j].getElementsByClassName("hour")[0].value
 
-                if (grade === "" || hour === ""){
-                    console.debug("Getting GPA: Failed")
-                    alert("Missing Info was found!")
-                    return -1
+                    if (grade === "" || hour === ""){
+                        console.debug("Getting GPA: Failed")
+                        alert("Missing Info was found!")
+                        return -1
+                    }
+
+                grade = Math.abs(grade)
+
+                if (calcdrop.value === "Mark")
+                    credit = finalGradeToCredit(grade)
+                else
+                    credit = grade
+
                 }
 
-        grade = Math.abs(grade)
+                else {
+                    let grade = subjects[j].getElementsByClassName("dropdownG")[0].value
+                    credit = letterGradeToCredit(grade)
 
-        if (!csCheck.checked)
-            credit = finalGradeToCredit(grade)
-        else
-            credit = grade
+                    hour = subjects[j].getElementsByClassName("hour")[0].value
+
+                    if (hour === ""){
+                        console.debug("Getting GPA: Failed")
+                        alert("Missing Info was found!")
+                        return -1
+                    }
+
+                }
 
         hour = Math.abs(hour)
         tcredit += credit * hour
@@ -116,35 +172,6 @@ gpaButton.onclick = function(){
     }
 
     document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${result[terms.length]}    Result: ${gpaToResult(result[terms.length])}`
-}
-
-
-function increaseCourses(parent,decreaseButton){
-    const cloneCourse = curdiv.cloneNode(true)
-    parent.appendChild(cloneCourse)
-    var textbox = cloneCourse.getElementsByClassName("textbox")
-    console.debug("Adding Course")
-
-    for (x = 0; x < textbox.length;x++)
-        textbox[x].value = ""
-
-    decreaseButton.classList.remove("disabled");
-}
-
-
-function lowerCourses(parent,decreaseButton){
-    let subjects = parent.getElementsByClassName("subjects")
-
-    if (subjects.length === 1) {
-        decreaseButton.classList.add("disabled");
-        return 
-    }
-
-    if (subjects.length === 2)
-        decreaseButton.classList.add("disabled");
-
-    subjects[subjects.length - 1].remove()
-    console.debug("Removing Course")
 }
 
 
@@ -185,14 +212,9 @@ increaseSemestersButton.onclick = function() {
     cloneSemester.innerHTML = cloneSemester.innerHTML.replace("Semester 1",`Semester ${semcount}`)
     let subjects = cloneSemester.getElementsByClassName("subjects")
 
-    for (x = 1; x < subjects.length;x++){
-        subjects[x].remove()
-    }
+    while (subjects.length > 1)
+        subjects[subjects.length - 1].remove()
 
-    let terms = getTerms()
-    terms[terms.length - 1].getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(cloneSemester, terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0])}
-    terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(cloneSemester,terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0])}
-    lowerCourses(cloneSemester,terms[terms.length - 1].getElementsByClassName("lowerbuttonc")[0])
     let igpa = cloneSemester.getElementsByClassName("igpa")[0]
     igpa.textContent = "Semester GPA: N/A"
     console.debug("Adding Semester")
@@ -224,32 +246,83 @@ document.getElementsByClassName("switch-theme")[0].onclick = function(){
     isLight = !isLight
 }
 
+calcdrop.onchange = function(){
+    let option = calcdrop.value
+    let gradesTextLabel = document.getElementsByClassName("grade")
+    let dropdownOption = document.getElementsByClassName("dropdownG")
 
-function cscheckevent() {
+    if (option === "Grade"){
+        let textlabel = document.getElementsByClassName("changeable-calc")
+        
 
-    if (csCheck.checked) {
-        let subContents = document.getElementsByClassName("sub-content")
+        for (x = 0; x < Math.min(gradesTextLabel.length,dropdownOption.length);x++){
+            dropdownOption[x].classList.remove("off")
+            gradesTextLabel[x].classList.add("off")
+        }
 
-        for (x = 0; x < subContents.length;x++)
-            subContents[x].innerHTML = subContents[x].innerHTML.replace("Final Mark","Grade Credit")
+        for (x = 0; x < textlabel.length;x++)
+            textlabel[x].innerHTML = "Grade"
 
-        console.debug("Switched Settings: Use Grade Credit")
-
+        console.debug("Switched Settings: Use Grade")
     }
 
     else {
-        let subContents = document.getElementsByClassName("sub-content")
-
-        for (x = 0; x < subContents.length;x++)
-            subContents[x].innerHTML = subContents[x].innerHTML.replace("Grade Credit","Final Mark")
         
-        console.debug("Switched Settings: Use Final Marks")
+        for (x = 0; x < Math.min(gradesTextLabel.length,dropdownOption.length);x++){
+            dropdownOption[x].classList.add("off")
+            gradesTextLabel[x].classList.remove("off")
+        }
+
+        if (option === "Credit") {
+            let textlabel = document.getElementsByClassName("changeable-calc")
+
+            for (x = 0; x < textlabel.length;x++)
+                textlabel[x].innerHTML = "Grade Credit"
+
+            console.debug("Switched Settings: Use Grade Credit")
+        }
+
+        else {
+            let textlabel = document.getElementsByClassName("changeable-calc")
+            
+            for (x = 0; x < textlabel.length;x++)
+                textlabel[x].innerHTML = "Final Mark"
+
+            console.debug("Switched Settings: Use Final Mark")
+        }
+
     }
-   
+
 }
 
 
-semdiv.getElementsByClassName("upperbuttonc")[0].onclick = function() {increaseCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
-semdiv.getElementsByClassName("lowerbuttonc")[0].onclick = function() {lowerCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])}
-lowerCourses(semdiv,semdiv.getElementsByClassName("lowerbuttonc")[0])
 decreaseSemestersButton.classList.add("disabled")
+
+
+function newIncCourse(parentdiv){
+    const cloneCourse = curdiv.cloneNode(true)
+    parentdiv.appendChild(cloneCourse)
+    var textbox = cloneCourse.getElementsByClassName("textbox")
+
+    for (x = 0; x < textbox.length;x++)
+        textbox[x].value = ""
+    
+    parentdiv.getElementsByClassName("lowerbuttonc")[0].classList.remove("disabled");
+    console.debug("Adding Course")
+}
+
+
+function newDecCourse(parentdiv,but){
+    let subjects = parentdiv.getElementsByClassName("subjects")
+
+    if (subjects.length === 1) {
+        but.classList.add("disabled");
+        return 
+    }
+
+    if (subjects.length === 2)
+        but.classList.add("disabled");
+
+    subjects[subjects.length - 1].remove()
+    console.debug("Removing Course")
+}

@@ -8,15 +8,19 @@
         <div class="title">
             <div class="sub-title">GPA Calculator</div>
             <div class="sub-title small">Made by Mythicalplayz</div>
-            <div class="sub-title small">v2.2.0</div>
+            <div class="sub-title small">v3.0.0</div>
             <button class="switch-theme">
                 <img src="Sun-Moon.svg" alt="" width="50px" height="50px">
              </button>
         </div>
         <div class="main-container">
-            <div class="options">
-                <div class="option2">Use Credit Score Instead of Final Mark
-                    <input type="checkbox" class="cscheck" onclick="cscheckevent()" id="cscheck">
+            <div class="options">Options
+                <div class="option2">Calcuate Using
+                    <select class="optiondropdown" id="calcdrop">
+                    <option value="Grade">Grade</option>
+                    <option value="Mark">Final Mark</option>
+                    <option value="Credit">Credit Hour</option>
+                    </select>
                 </div>
             </div>
             <div class="scount">
@@ -27,19 +31,30 @@
             <div class="terms">
                     Semester 1
                     <div class="ccount">
-                        <button class="lowerbuttonc">-</button>
+                        <button class="lowerbuttonc disabled" onclick="newDecCourse(this.parentElement.parentElement,this)">-</button>
                              Number of Courses
-                        <button class="upperbuttonc">+</button>
+                        <button class="upperbuttonc" onclick="newIncCourse(this.parentElement.parentElement)">+</button>
                     </div>
                     <div class="igpa">Semester GPA: N/A</div>
                 <div class="content">
-                    <div class="sub-content">Subject Name (optional)</div>
-                    <div class="sub-content">Final Mark</div>
+                    <div class="sub-content">Subject Name (NR)</div>
+                    <div class="sub-content changeable-calc">Grade</div>
                     <div class="sub-content">Hours</div>
                 </div>
                 <div class="subjects">
                     <input type="text" class="sub textbox">
-                    <input type="number" class="grade textbox">
+                    <select class="dropdown dropdownG">
+                        <option value="A+">A+</option>
+                        <option value="A">A</option>
+                        <option value="B+">B+</option>
+                        <option value="B">B</option>
+                        <option value="C+">C+</option>
+                        <option value="C">C</option>
+                        <option value="D+">D+</option>
+                        <option value="D">D</option>
+                        <option value="F">F</option>
+                    </select>
+                    <input type="number" class="grade textbox off">
                     <input type="number" class="hour textbox">
                 </div>
             </div>
