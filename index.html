@@ -8,8 +8,8 @@
         <div class="title">
             <div class="sub-title">GPA Calculator</div>
             <div class="sub-title small">Made by Mythicalplayz</div>
-            <div class="sub-title small">v3.0.0</div>
-            <button class="switch-theme">
+            <div class="sub-title small">v4.0.0</div>
+            <button class="switch-theme" onclick="toggleTheme()">
                 <img src="Sun-Moon.svg" alt="" width="50px" height="50px">
              </button>
         </div>
@@ -31,9 +31,9 @@
             <div class="terms">
                     Semester 1
                     <div class="ccount">
-                        <button class="lowerbuttonc disabled" onclick="newDecCourse(this.parentElement.parentElement,this)">-</button>
+                        <button class="lowerbuttonc disabled" onclick="decCourse(this.parentElement.parentElement,this)">-</button>
                              Number of Courses
-                        <button class="upperbuttonc" onclick="newIncCourse(this.parentElement.parentElement)">+</button>
+                        <button class="upperbuttonc" onclick="incCourse(this.parentElement.parentElement)">+</button>
                     </div>
                     <div class="igpa">Semester GPA: N/A</div>
                 <div class="content">
@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="fgpa">Final GPA: N/A</div>
-        <button class="button">Get GPA!</button>
+        <button class="gpabutton" onclick="getGPA()">Get GPA!</button>
     </body>
     <script src="main.js"></script>
 </html>
