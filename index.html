@@ -2,14 +2,17 @@
     <link rel="stylesheet" href="styles.css">
     <head>
         <title>GPA Calculator</title>
+        <link rel="icon" type="image/x-icon" href="/Logo.png">
+        <link rel="canonical" href="https://mythicalplayz.github.io/github-page-pwa/" />
+        <link rel="manifest" href="manifest.json">
     </head>
     <body>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <div class="title">
             <div class="sub-title">GPA Calculator</div>
-            <div class="sub-title small">Made by Mythicalplayz</div>
-            <div class="sub-title small">v3.0.0</div>
-            <button class="switch-theme">
+            <div class="sub-title small">Made by MythicalPlayz</div>
+            <div class="sub-title small">v5.0.0</div>
+            <button class="switch-theme" onclick="toggleTheme()">
                 <img src="Sun-Moon.svg" alt="" width="50px" height="50px">
              </button>
         </div>
@@ -31,9 +34,9 @@
             <div class="terms">
                     Semester 1
                     <div class="ccount">
-                        <button class="lowerbuttonc disabled" onclick="newDecCourse(this.parentElement.parentElement,this)">-</button>
+                        <button class="lowerbuttonc disabled" onclick="decCourse(this.parentElement.parentElement,this)">-</button>
                              Number of Courses
-                        <button class="upperbuttonc" onclick="newIncCourse(this.parentElement.parentElement)">+</button>
+                        <button class="upperbuttonc" onclick="incCourse(this.parentElement.parentElement)">+</button>
                     </div>
                     <div class="igpa">Semester GPA: N/A</div>
                 <div class="content">
@@ -60,7 +63,12 @@
             </div>
         </div>
         <div class="fgpa">Final GPA: N/A</div>
-        <button class="button">Get GPA!</button>
+        <button class="gpabutton" onclick="getGPA()">Get GPA!</button>
+        <button id="installApp" class="installApp off">Install as PWA</button>
     </body>
     <script src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator)
+            navigator.serviceWorker.register("/GPA-Calculator/service-worker.js",{"scope": "/GPA-Calculator/"})
+    </script>
 </html>

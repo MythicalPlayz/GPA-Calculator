@@ -1,9 +1,16 @@
+:root {
+    --default-color: rgb(61, 210, 255);
+    --disabled-button: rgba(204, 218, 227, 0.7);
+    --enabled-button: rgb(43, 173, 212)
+}
+
+
 .title {
     text-align: center;
     font-weight: bold;
     font-size: 60px;
     color: white;
-    background-color: rgb(61, 210, 255);
+    background-color: var(--default-color);
     border-radius: 0px 0px 50% 50%;
     margin-top: -10px;
     height: 25%;
@@ -14,7 +21,6 @@
 
 .small {
     font-size: 20px;
-    color: rgb(183, 183, 183);
 }
 
 .content {
@@ -51,7 +57,7 @@
 }
 
 .terms {
-    background-color: rgb(61, 210, 255);
+    background-color: var(--default-color);
     border-radius: 8px;
     padding-bottom: 20px;
     padding-top: 10px;
@@ -67,15 +73,16 @@ body {
     font-size: 40px;
 }
 
-.button {
+.gpabutton {
     margin-top: 50px;
     width: 60%;
     margin-left: 20%;
+    margin-right: 20%;
     height: 50px;
     font-size: 40px;
     border-radius: 20px;
     border: 0px;
-    background-color: rgb(61, 210, 255);
+    background-color: var(--default-color);
     color: white;
 }
 
@@ -91,58 +98,26 @@ body {
     font-weight: lighter;
 }
 
-.lowerbutton {
+button {
     font-size: 40px;
     width: 50px;
     height: 50px;
-    background-color: rgba(61, 210, 255, 1);
+    background-color: var(--enabled-button);
     color: white;
     border: 0px;
     border-radius: 4px;
-}
-
-.lowerbuttonc {
-    font-size: 40px;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(43, 173, 212);
-    color: white;
-    border: 0px;
-    border-radius: 4px;
-}
-
-.upperbutton {
-    font-size: 40px;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(61, 210, 255, 1);
-    color: white;
-    border: 0px;
-    border-radius: 4px;
-}
-
-.upperbuttonc {
-    font-size: 40px;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(43, 173, 212, 1);
-    color: white;
-    border: 0px;
-    border-radius: 4px;
-}
-
-.disabled {
-    background-color: rgba(204, 218, 227, 0.336) !important; 
 }
 
 .switch-theme {
     background-color: rgba(14, 150, 247, 0);
     border: 0px;
+    width: auto;
+    height: auto;
 }
 
 .body-dark{
-    background-color: black !important;
-    color: white !important;
+    background-color: black;
+    color: white;
 }
 
 .terms-dark{
@@ -166,12 +141,15 @@ body {
 }
 
 .option2 {
+    margin-top: 10px;
     font-size: 24px;
 }
 
 .dropdown {
     width: 30%;
     font-size: 32px;
+    border-radius: 8px;
+    border: 0px;
 }
 
 .optiondropdown {
@@ -182,6 +160,17 @@ body {
 
 .off {
     display: none;
+}
+
+.disabled {
+    background-color: var(--disabled-button); 
+}
+
+.installApp {
+    width: 30%;
+    margin-top: 20px;
+    margin-left: 35%;
+    margin-right: 35%;
 }
 
 @media screen and (max-width: 900px) {
@@ -195,15 +184,13 @@ body {
         width: 20% ;
         font-size: 20px ;
     }
-    .lowerbutton {
+    button {
         width: 40px;
         height: 40px;
-        font-size: 20px;
+        font-size: 32px;
     }
-    .upperbutton {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+    .installApp {
+        font-size: 24px;
     }
 }
 
@@ -214,7 +201,7 @@ body {
     .scount {
         font-size: 24px;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
     }
     .optiondropdown {
         width: 30% ;
@@ -228,6 +215,9 @@ body {
     }
     .dropdown {
         font-size: 20px;
+    }
+    .installApp {
+        font-size: 16px;
     }
 }
 
@@ -248,16 +238,5 @@ body {
         font-size: 16px;
         display: flex;
         justify-content: space-around;
-    }
-
-    .lowerbuttonc {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-    .upperbuttonc {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
     }
 }

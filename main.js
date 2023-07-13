@@ -1,5 +1,4 @@
 const calcdrop = document.getElementById("calcdrop")
-const gpaButton = document.getElementsByClassName("button")[0]
 
 const minSem = 1
 const maxSem = 12
@@ -111,7 +110,7 @@ function calculateGPA(){
 
                     if (grade === "" || hour === ""){
                         console.debug("Getting GPA: Failed")
-                        alert("Missing Info was found!")
+                        alert(`Missing Info was found! at Term ${i + 1}, Course ${j + 1}`)
                         return -1
                     }
 
@@ -132,7 +131,7 @@ function calculateGPA(){
 
                     if (hour === ""){
                         console.debug("Getting GPA: Failed")
-                        alert("Missing Info was found!")
+                        alert(`Missing Info was found! at Term ${i + 1}, Course ${j + 1}`)
                         return -1
                     }
 
@@ -161,8 +160,7 @@ function calculateGPA(){
 }
 
 
-
-gpaButton.onclick = function(){
+function getGPA(){
     let result = calculateGPA()
     if (result === -1) return
     let terms = getTerms()
@@ -220,8 +218,7 @@ increaseSemestersButton.onclick = function() {
     console.debug("Adding Semester")
 }
 
-
-document.getElementsByClassName("switch-theme")[0].onclick = function(){
+function toggleTheme(){
 
     if (isLight) {
         document.body.classList.add("body-dark")
@@ -299,7 +296,7 @@ calcdrop.onchange = function(){
 decreaseSemestersButton.classList.add("disabled")
 
 
-function newIncCourse(parentdiv){
+function incCourse(parentdiv){
     const cloneCourse = curdiv.cloneNode(true)
     parentdiv.appendChild(cloneCourse)
     var textbox = cloneCourse.getElementsByClassName("textbox")
@@ -312,7 +309,7 @@ function newIncCourse(parentdiv){
 }
 
 
-function newDecCourse(parentdiv,but){
+function decCourse(parentdiv,but){
     let subjects = parentdiv.getElementsByClassName("subjects")
 
     if (subjects.length === 1) {
@@ -326,3 +323,36 @@ function newDecCourse(parentdiv,but){
     subjects[subjects.length - 1].remove()
     console.debug("Removing Course")
 }
+
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+    deferredPrompt = e;
+    document.getElementById("installApp").classList.remove("off");
+    e.userChoice.then(function(choiceResult){
+        console.log(choiceResult.outcome);
+        if(choiceResult.outcome == 'dismissed'){
+            console.log('User cancelled home screen install');
+        }else{
+            console.log('User added to home screen');
+        }
+    });
+});
+
+
+
+window.addEventListener('load', () => {
+    //select the button with ID pwaAppInstallBtn
+    const pwaAppInstallBtn = document.getElementById("installApp");
+    pwaAppInstallBtn.addEventListener('click', async () => {
+        if (deferredPrompt !== null) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                deferredPrompt = null;
+            }
+        } else {
+            console.log("deferred prompt is null [Website cannot be installed]")
+        }
+    });
+})
