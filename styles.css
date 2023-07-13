@@ -189,6 +189,9 @@ button {
         height: 40px;
         font-size: 32px;
     }
+    .installApp {
+        font-size: 24px;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -212,6 +215,9 @@ button {
     }
     .dropdown {
         font-size: 20px;
+    }
+    .installApp {
+        font-size: 16px;
     }
 }
 
