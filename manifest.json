@@ -2,6 +2,7 @@
     "name": "GPA Calcuator",
     "short_name": "GPA+",
     "start_url": "/GPA-Calculator/",
+    "scope": "/GPA-Calculator/",
     "icons": [
         {
           "src": "/GPA-Calculator/icons/manifest-icon-192.maskable.png",
