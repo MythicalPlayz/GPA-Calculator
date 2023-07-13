@@ -323,3 +323,36 @@ function decCourse(parentdiv,but){
     subjects[subjects.length - 1].remove()
     console.debug("Removing Course")
 }
+
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(e) {
+    deferredPrompt = e;
+    document.getElementById("installApp").classList.remove("off");
+    e.userChoice.then(function(choiceResult){
+        console.log(choiceResult.outcome);
+        if(choiceResult.outcome == 'dismissed'){
+            console.log('User cancelled home screen install');
+        }else{
+            console.log('User added to home screen');
+        }
+    });
+});
+
+
+
+window.addEventListener('load', () => {
+    //select the button with ID pwaAppInstallBtn
+    const pwaAppInstallBtn = document.getElementById("installApp");
+    pwaAppInstallBtn.addEventListener('click', async () => {
+        if (deferredPrompt !== null) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                deferredPrompt = null;
+            }
+        } else {
+            console.log("deferred prompt is null [Website cannot be installed]")
+        }
+    });
+})
