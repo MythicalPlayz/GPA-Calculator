@@ -356,3 +356,13 @@ window.addEventListener('load', () => {
         }
     });
 })
+
+if ('DeviceOrientationEvent' in window) {
+    const availableScreenWidth = screen.availWidth;
+    const availableScreenHeight = screen.availHeight;
+
+    if (availableScreenWidth > availableScreenHeight){
+        if (screen.orientation && screen.orientation.lock)
+            screen.orientation.lock('landscape')
+    }
+}
