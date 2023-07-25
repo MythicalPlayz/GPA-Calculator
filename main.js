@@ -362,7 +362,11 @@ if ('DeviceOrientationEvent' in window) {
     const availableScreenHeight = screen.availHeight;
 
     if (availableScreenWidth > availableScreenHeight){
-        if (screen.orientation && screen.orientation.lock)
+        if (screen.orientation && screen.orientation.lock){
+            try {
             screen.orientation.lock('landscape')
+            }
+            catch (e) {}
+        }
     }
 }
