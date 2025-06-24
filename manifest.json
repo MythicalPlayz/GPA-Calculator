@@ -1,29 +1,29 @@
 {
     "name": "GPA Calcuator",
     "short_name": "GPA+",
-    "start_url": "/GPA-Calculator/",
-    "scope": "/GPA-Calculator/",
+    "start_url": "/",
+    "scope": "/",
     "icons": [
         {
-          "src": "/GPA-Calculator/icons/manifest-icon-192.maskable.png",
+          "src": "/icons/manifest-icon-192.maskable.png",
           "sizes": "192x192",
           "type": "image/png",
           "purpose": "any"
         },
         {
-          "src": "/GPA-Calculator/icons/manifest-icon-192.maskable.png",
+          "src": "/icons/manifest-icon-192.maskable.png",
           "sizes": "192x192",
           "type": "image/png",
           "purpose": "maskable"
         },
         {
-          "src": "/GPA-Calculator/icons/manifest-icon-512.maskable.png",
+          "src": "/icons/manifest-icon-512.maskable.png",
           "sizes": "512x512",
           "type": "image/png",
           "purpose": "any"
         },
         {
-          "src": "/GPA-Calculator/icons/manifest-icon-512.maskable.png",
+          "src": "/icons/manifest-icon-512.maskable.png",
           "sizes": "512x512",
           "type": "image/png",
           "purpose": "maskable"

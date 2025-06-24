@@ -1,74 +1,81 @@
-<html>
+<html lang="en">
     <link rel="stylesheet" href="styles.css">
     <head>
         <title>GPA Calculator</title>
-        <link rel="icon" type="image/x-icon" href="/GPA-Calculator/Logo.png">
+        <link rel="icon" type="image/x-icon" href="Logo.png">
         <link rel="canonical" href="https://mythicalplayz.github.io/GPA-Calculator/" />
         <link rel="manifest" href="/GPA-Calculator/manifest.json">
     </head>
+
     <body>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <div class="title">
-            <div class="sub-title">GPA Calculator</div>
-            <div class="sub-title small">Made by MythicalPlayz</div>
-            <div class="sub-title small">v5.0.0</div>
-            <button class="switch-theme" onclick="toggleTheme()">
-                <img src="Sun-Moon.svg" alt="" width="50px" height="50px">
-             </button>
-        </div>
-        <div class="main-container">
-            <div class="options">Options
-                <div class="option2">Calcuate Using
-                    <select class="optiondropdown" id="calcdrop">
-                    <option value="Grade">Grade</option>
-                    <option value="Mark">Final Mark</option>
-                    <option value="Credit">Credit Hour</option>
+        <nav>
+            <h1><span>G</span>PA+</h1>
+            <button id="openOptions">Options</button>
+        </nav>
+        <div id="options" class="off">
+            <div class="menu">
+                <h2>Options</h2>
+                <div class="option">
+                    <label for="theme">Theme:</label>
+                    <select name="theme" id="theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="auto" selected>Auto</option>
                     </select>
                 </div>
-            </div>
-            <div class="scount">
-                <button class="lowerbutton">-</button>
-                    Number of Semesters
-                <button class="upperbutton">+</button>
-            </div>
-            <div class="terms">
-                    Semester 1
-                    <div class="ccount">
-                        <button class="lowerbuttonc disabled" onclick="decCourse(this.parentElement.parentElement,this)">-</button>
-                             Number of Courses
-                        <button class="upperbuttonc" onclick="incCourse(this.parentElement.parentElement)">+</button>
-                    </div>
-                    <div class="igpa">Semester GPA: N/A</div>
-                <div class="content">
-                    <div class="sub-content">Subject Name (NR)</div>
-                    <div class="sub-content changeable-calc">Grade</div>
-                    <div class="sub-content">Hours</div>
+                <h3>Grades</h3>
+                <button id="add">Add</button>
+                <ul class="grades">
+                    <li>
+                        <input type="text" placeholder="Grade" required/>
+                        <input type="number" placeholder="Points" required min='0'/>
+                        <button onclick="deleteGrade(e)" class="delete">X</button>
+                    </li>
+                </ul>
+                <div class="buttons">
+                    <button id="copy">Copy to clipboard</button>
+                    <button id="load">Load from clipboard</button>
                 </div>
-                <div class="subjects">
-                    <input type="text" class="sub textbox">
-                    <select class="dropdown dropdownG">
-                        <option value="A+">A+</option>
-                        <option value="A">A</option>
-                        <option value="B+">B+</option>
-                        <option value="B">B</option>
-                        <option value="C+">C+</option>
-                        <option value="C">C</option>
-                        <option value="D+">D+</option>
-                        <option value="D">D</option>
-                        <option value="F">F</option>
-                    </select>
-                    <input type="number" class="grade textbox off">
-                    <input type="number" class="hour textbox">
+                <button id="closeOptions" color="error">Close</button>
+            </div>
+        </div>
+        <div id="termcount">
+            <button onclick="" color="error" class="disabled">-</button>
+            <h3>Term Count</h3>
+            <button onclick="">+</button>
+        </div>
+        <div id="terms">
+            <div class="term">
+                <h2>Term 1</h2>
+                <div class="controls">
+                    <button onclick="" color="error">-</button>
+                    <button onclick="">+</button>
+                </div>
+                <div class="row">
+                    <input type="text" placeholder="Course Name"/>
+                    <input type="number" placeholder="Hours" min="0" max="24"/>
+                    <select name="grade"></select>
+                </div>
+                <div class="info">
+                    <h4>GPA: N/A</h4>
+                    <h4>Total Hours: N/A</h4>
                 </div>
             </div>
         </div>
-        <div class="fgpa">Final GPA: N/A</div>
-        <button class="gpabutton" onclick="getGPA()">Get GPA!</button>
-        <button id="installApp" class="installApp off">Install as PWA</button>
+        <div class="final">
+            <h2>Your Total GPA: N/A</h2>
+            <h2>Your Total Hours: N/A</h2>
+            <button id="calcuate">Calculate GPA</button>
+        </div>
+        <!-- <button id="installApp" class="installApp off">Install as PWA</button> -->
+        <footer><p>Copyright 2024©️ MythicalPlayz</p></footer>
     </body>
+
+    <script src="jquery-3.7.1.min.js"></script>
     <script src="main.js"></script>
-    <script>
+    <!-- <script>
         if ('serviceWorker' in navigator)
-            navigator.serviceWorker.register("/GPA-Calculator/service-worker.js",{"scope": "/GPA-Calculator/"})
-    </script>
+            navigator.serviceWorker.register("/service-worker.js",{"scope": "/"})
+    </script> -->
 </html>

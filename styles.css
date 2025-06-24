@@ -1,242 +1,290 @@
 :root {
     --default-color: rgb(61, 210, 255);
-    --disabled-button: rgba(204, 218, 227, 0.7);
-    --enabled-button: rgb(43, 173, 212)
+    --success-color: rgb(138, 196, 75);
+    --error-color: rgb(237, 28, 36);
+    --warning-color: rgb(248, 152, 29);
+    --text-white: #fff;
 }
 
-
-.title {
-    text-align: center;
-    font-weight: bold;
-    font-size: 60px;
-    color: white;
-    background-color: var(--default-color);
-    border-radius: 0px 0px 50% 50%;
-    margin-top: -10px;
-    height: 25%;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    margin-bottom: 50px;
-}
-
-.small {
-    font-size: 20px;
-}
-
-.content {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding-top: 20px;
-}
-
-.sub-content {
-    width: 30%;
-    text-align: center;
-}
-
-.subjects {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-}
-
-.textbox {
-    width: 30%;
-    height: 50px;
-    border: 0px;
-    border-radius: 5px;
-    font-size: 40px;
-}
-
-.main-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.terms {
-    background-color: var(--default-color);
-    border-radius: 8px;
-    padding-bottom: 20px;
-    padding-top: 10px;
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 20px;
-    width: 42.5%;
-    margin-left: 5%;
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    transition: all 250ms ease-in-out;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 40px;
+    margin: 0;
 }
 
-.gpabutton {
-    margin-top: 50px;
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
-    height: 50px;
-    font-size: 40px;
-    border-radius: 20px;
-    border: 0px;
-    background-color: var(--default-color);
-    color: white;
+nav {
+    width: 90%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-inline: auto;
+    box-shadow: 0px 5px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
 }
 
-.scount {
-    text-align: center;
-    padding-bottom: 20px;
-    width: 100%;
+nav h1 {
+    font-size: 48px;
+    color: var(--default-color);
 }
 
-.ccount {
-    text-align: center;
-    font-size: 20px;
-    font-weight: lighter;
+nav h1 span {
+    color: var(--error-color);
 }
 
 button {
-    font-size: 40px;
-    width: 50px;
-    height: 50px;
-    background-color: var(--enabled-button);
-    color: white;
     border: 0px;
-    border-radius: 4px;
+    border-radius: 16px;
+    padding: 16px 8px
 }
 
-.switch-theme {
-    background-color: rgba(14, 150, 247, 0);
-    border: 0px;
-    width: auto;
-    height: auto;
+nav button {
+    background-color: var(--warning-color);
+    color: var(--text-white);
 }
 
-.body-dark{
-    background-color: black;
-    color: white;
+nav button:hover,nav button:focus {
+    outline: solid 5px rgba(248,152,29,0.3);
 }
 
-.terms-dark{
-    background-color: rgb(34 34 34);
+#options {
+    background-color: rgba(120, 120, 120, 0.8);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    z-index: 2;
 }
 
-.fgpa {
-    margin-top: 50px;
+#options .menu {
+    width: 40%;
+    border-radius: 16px;
+    background-color: var(--text-white);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+select,input {
+    border-radius: 16px;
+    padding: 8px 16px;
+}
+
+select,button {
+    cursor: pointer;
+}
+
+#options .option {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#options ul {
+    width: 80%;
+    padding: 0;
+}
+
+#options li {
     width: 100%;
-    text-align: center;
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 16px;
 }
 
-.igpa {
-    padding-top: 20px;
+#options input {
+    border-radius: 16px;
+    padding-inline: 16px;
 }
 
-.options {
-    width: 100%;
-    text-align: center;
-    padding-bottom: 50px;
+#options div > button {
+    width: 40%;
+    background-color: var(--default-color);
+    color: var(--text-white);
+    margin-block: 16px;
 }
 
-.option2 {
-    margin-top: 10px;
-    font-size: 24px;
+#options div > button:hover,#options div > button:focus {
+    outline: solid 5px rgba(61, 210, 255,0.3);
 }
 
-.dropdown {
-    width: 30%;
-    font-size: 32px;
-    border-radius: 8px;
-    border: 0px;
+#options .buttons {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }
 
-.optiondropdown {
-    width: 10%;
-    height: 40px;
-    font-size: 24px;
+#options input+button {
+    border-radius: 2.5rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--error-color);
+    color: var(--text-white);
+}
+
+#options input+button:hover, #options input+button:focus {
+    outline: solid 5px rgba(237, 28, 36,0.3);
 }
 
 .off {
-    display: none;
+    display: none !important;
 }
 
-.disabled {
-    background-color: var(--disabled-button); 
+button.disabled {
+    filter: grayscale(0.7);
+    cursor: default;
 }
 
+#terms {
+    width: 90%;
+    padding-block: 16px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+#terms .term {
+    display: flex;
+    width: 45%;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px var(--default-color) solid;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+#terms .term .row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+#terms .controls {
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+}
+
+#terms .controls button, #termcount button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--default-color);
+    color: var(--text-white);
+}
+
+button[color='error'] {
+    background-color: var(--error-color) !important;
+}
+
+#termcount {
+    display: flex;
+    margin: 16px auto;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.term .info {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.final {
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    width: 75%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.final h2 {
+    margin: 4px;
+}
+
+.final button {
+    background-color: var(--success-color);
+    color: var(--text-white);
+}
+
+.final button:hover,.final button:focus {
+    outline: solid 5px rgba(138, 196, 75,0.3);
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    background-color: grey;
+    color: var(--text-white);
+    margin-top: 32px;
+    bottom: 0;
+    position: relative;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 .installApp {
     width: 30%;
     margin-top: 20px;
-    margin-left: 35%;
-    margin-right: 35%;
+    margin-inline: auto;
 }
 
 @media screen and (max-width: 900px) {
-    .terms {
-      width: 90%;
-    }
-    .scount {
-        font-size: 24px;
-    }
-    .optiondropdown {
-        width: 20% ;
-        font-size: 20px ;
-    }
-    button {
-        width: 40px;
-        height: 40px;
-        font-size: 32px;
-    }
     .installApp {
         font-size: 24px;
-    }
+    } 
 }
 
 @media screen and (max-width: 600px) {
-    .terms {
-      width: 90%;
-    }
-    .scount {
-        font-size: 24px;
-        display: flex;
-        justify-content: space-evenly;
-    }
-    .optiondropdown {
-        width: 30% ;
-        font-size: 16px ;
-    }
-    .terms {
-        font-size: 20px;
-    }
-    .textbox {
-        font-size: 20px;
-    }
-    .dropdown {
-        font-size: 20px;
-    }
     .installApp {
         font-size: 16px;
-    }
+    } 
 }
 
 @media screen and (max-width: 400px) {
-    .scount {
-        font-size: 16px;
-    }
-    .terms {
-        font-size: 16px;
-    }
-    .textbox {
-        font-size: 16px;
-    }
-    .dropdown {
-        font-size: 16px;
-    }
-    .ccount {
-        font-size: 16px;
-        display: flex;
-        justify-content: space-around;
-    }
-}
+
+} */

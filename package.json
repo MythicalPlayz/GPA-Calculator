@@ -1,5 +1,5 @@
 {
-  "dependencies": {
+  "devDependencies": {
     "pwa-asset-generator": "^6.3.1"
   }
 }
