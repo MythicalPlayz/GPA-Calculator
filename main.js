@@ -423,7 +423,7 @@ function loadCourses() {
     let terms = getTerms();
     for (let i = 0; i < data.length; i++) {
         const term = terms[i];
-        const parent = term.querySelector(".term-container");
+        const parent = term.querySelector(".term-container") || term;
         const courses = data[i];
 
         // Remove extra subjects first
