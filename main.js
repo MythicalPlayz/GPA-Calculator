@@ -13,22 +13,22 @@ const curdiv = semdiv.getElementsByClassName("subjects")[0]
 
 var isLight = true
 
-function gpaToResult(gpa){
+function gpaToResult(gpa) {
     if (gpa >= 3.5)
-    return "Excellent"
+        return "Excellent"
     if (gpa >= 3.0)
-    return "Very Good"
+        return "Very Good"
     if (gpa >= 2.5)
-    return "Good"
+        return "Good"
     if (gpa >= 2)
-    return "Passable"
+        return "Passable"
     if (gpa >= 1.5)
-    return "Weak"
+        return "Weak"
     return "Very Week"
 }
 
 
-function finalGradeToCredit(grade){
+function finalGradeToCredit(grade) {
 
     if (grade >= 90)
         return 4
@@ -54,11 +54,11 @@ function finalGradeToCredit(grade){
     if (grade >= 50)
         return 2
 
-   return 0
+    return 0
 }
 
 
-function letterGradeToCredit(value){
+function letterGradeToCredit(value) {
 
     if (value == "A+")
         return 4
@@ -84,35 +84,35 @@ function letterGradeToCredit(value){
     if (value == "D")
         return 2
 
-   return 0
+    return 0
 }
 
 
-function getTerms(){
+function getTerms() {
     return document.getElementsByClassName("terms")
 }
 
 
-function calculateGPA(){
+function calculateGPA() {
     let terms = getTerms()
     let gpas = []
 
-    for (i = 0; i < terms.length;i++){
+    for (i = 0; i < terms.length; i++) {
         let subjects = terms[i].querySelectorAll(".subjects")
         let tcredit = 0
         let thour = 0
 
-            for (j = 0; j < subjects.length;j++){
-                let grade, credit, hour
-                if (calcdrop.value !== "Grade"){
-                    grade = subjects[j].getElementsByClassName("grade")[0].value
-                    hour = subjects[j].getElementsByClassName("hour")[0].value
+        for (j = 0; j < subjects.length; j++) {
+            let grade, credit, hour
+            if (calcdrop.value !== "Grade") {
+                grade = subjects[j].getElementsByClassName("grade")[0].value
+                hour = subjects[j].getElementsByClassName("hour")[0].value
 
-                    if (grade === "" || hour === ""){
-                        console.debug("Getting GPA: Failed")
-                        alert(`Missing Info was found! at Term ${i + 1}, Course ${j + 1}`)
-                        return -1
-                    }
+                if (grade === "" || hour === "") {
+                    console.debug("Getting GPA: Failed")
+                    alert(`Missing Info was found! at Term ${i + 1}, Course ${j + 1}`)
+                    return -1
+                }
 
                 grade = Math.abs(grade)
 
@@ -121,34 +121,34 @@ function calculateGPA(){
                 else
                     credit = grade
 
+            }
+
+            else {
+                let grade = subjects[j].getElementsByClassName("dropdownG")[0].value
+                credit = letterGradeToCredit(grade)
+
+                hour = subjects[j].getElementsByClassName("hour")[0].value
+
+                if (hour === "") {
+                    console.debug("Getting GPA: Failed")
+                    alert(`Missing Info was found! at Term ${i + 1}, Course ${j + 1}`)
+                    return -1
                 }
 
-                else {
-                    let grade = subjects[j].getElementsByClassName("dropdownG")[0].value
-                    credit = letterGradeToCredit(grade)
+            }
 
-                    hour = subjects[j].getElementsByClassName("hour")[0].value
-
-                    if (hour === ""){
-                        console.debug("Getting GPA: Failed")
-                        alert(`Missing Info was found! at Term ${i + 1}, Course ${j + 1}`)
-                        return -1
-                    }
-
-                }
-
-        hour = Math.abs(hour)
-        tcredit += credit * hour
-        thour += hour
+            hour = Math.abs(hour)
+            tcredit += credit * hour
+            thour += hour
         }
 
-    gpas.push(parseFloat((tcredit / thour).toFixed(2)))
+        gpas.push(parseFloat((tcredit / thour).toFixed(2)))
 
     }
 
     var fgpa = 0
 
-    for (x = 0; x < gpas.length;x++){
+    for (x = 0; x < gpas.length; x++) {
         fgpa += gpas[x]
     }
 
@@ -160,20 +160,49 @@ function calculateGPA(){
 }
 
 
-function getGPA(){
+function getGPA() {
     let result = calculateGPA()
     if (result === -1) return
     let terms = getTerms()
 
-    for (x = 0; x < terms.length;x++){
+    for (x = 0; x < terms.length; x++) {
         terms[x].getElementsByClassName("igpa")[0].textContent = `Semester GPA: ${result[x]}`
     }
 
     document.getElementsByClassName("fgpa")[0].textContent = `Final GPA: ${result[terms.length]}    Result: ${gpaToResult(result[terms.length])}`
+
+    // Save to localStorage
+    let saveData = [];
+
+    for (let i = 0; i < terms.length; i++) {
+        let termObj = [];
+        let subjects = terms[i].querySelectorAll(".subjects");
+
+        for (let j = 0; j < subjects.length; j++) {
+            let subject = subjects[j];
+            let course = {
+                name: subject.querySelector(".sub.textbox")?.value || "",
+                hour: subject.querySelector(".hour.textbox")?.value || "",
+                grade: calcdrop.value === "Grade"
+                    ? subject.querySelector(".dropdownG")?.value || ""
+                    : subject.querySelector(".grade.textbox")?.value || ""
+            };
+            termObj.push(course);
+        }
+
+        saveData.push(termObj);
+    }
+
+    localStorage.setItem("savedCourses", JSON.stringify({
+        mode: calcdrop.value,
+        data: saveData,
+        semcount: terms.length
+    }));
+
 }
 
 
-decreaseSemestersButton.onclick = function() {
+decreaseSemestersButton.onclick = function () {
     increaseSemestersButton.classList.remove("disabled")
 
     if (semcount == minSem) {
@@ -182,7 +211,7 @@ decreaseSemestersButton.onclick = function() {
     }
 
     semcount -= 1
-    
+
     if (semcount === minSem)
         decreaseSemestersButton.classList.add("disabled")
 
@@ -192,7 +221,7 @@ decreaseSemestersButton.onclick = function() {
 }
 
 
-increaseSemestersButton.onclick = function() {
+increaseSemestersButton.onclick = function () {
     decreaseSemestersButton.classList.remove("disabled")
 
     if (semcount == maxSem) {
@@ -207,7 +236,7 @@ increaseSemestersButton.onclick = function() {
 
     const cloneSemester = semdiv.cloneNode(true)
     document.getElementsByClassName("main-container")[0].appendChild(cloneSemester)
-    cloneSemester.innerHTML = cloneSemester.innerHTML.replace("Semester 1",`Semester ${semcount}`)
+    cloneSemester.innerHTML = cloneSemester.innerHTML.replace("Semester 1", `Semester ${semcount}`)
     let subjects = cloneSemester.getElementsByClassName("subjects")
 
     while (subjects.length > 1)
@@ -218,24 +247,23 @@ increaseSemestersButton.onclick = function() {
     console.debug("Adding Semester")
 }
 
-function toggleTheme(){
+function toggleTheme() {
 
     if (isLight) {
         document.body.classList.add("body-dark")
         let terms = getTerms()
 
-        for (i = 0; i < terms.length;i++)
+        for (i = 0; i < terms.length; i++)
             terms[i].classList.add("terms-dark")
 
         console.debug("Switched Theme: Dark")
     }
 
-    else
-    {
+    else {
         document.body.classList.remove("body-dark")
         let terms = getTerms()
 
-        for (i = 0; i < terms.length;i++)
+        for (i = 0; i < terms.length; i++)
             terms[i].classList.remove("terms-dark")
 
         console.debug("Switched Theme: Light")
@@ -243,29 +271,29 @@ function toggleTheme(){
     isLight = !isLight
 }
 
-calcdrop.onchange = function(){
+calcdrop.onchange = function () {
     let option = calcdrop.value
     let gradesTextLabel = document.getElementsByClassName("grade")
     let dropdownOption = document.getElementsByClassName("dropdownG")
 
-    if (option === "Grade"){
+    if (option === "Grade") {
         let textlabel = document.getElementsByClassName("changeable-calc")
-        
 
-        for (x = 0; x < Math.min(gradesTextLabel.length,dropdownOption.length);x++){
+
+        for (x = 0; x < Math.min(gradesTextLabel.length, dropdownOption.length); x++) {
             dropdownOption[x].classList.remove("off")
             gradesTextLabel[x].classList.add("off")
         }
 
-        for (x = 0; x < textlabel.length;x++)
+        for (x = 0; x < textlabel.length; x++)
             textlabel[x].innerHTML = "Grade"
 
         console.debug("Switched Settings: Use Grade")
     }
 
     else {
-        
-        for (x = 0; x < Math.min(gradesTextLabel.length,dropdownOption.length);x++){
+
+        for (x = 0; x < Math.min(gradesTextLabel.length, dropdownOption.length); x++) {
             dropdownOption[x].classList.add("off")
             gradesTextLabel[x].classList.remove("off")
         }
@@ -273,7 +301,7 @@ calcdrop.onchange = function(){
         if (option === "Credit") {
             let textlabel = document.getElementsByClassName("changeable-calc")
 
-            for (x = 0; x < textlabel.length;x++)
+            for (x = 0; x < textlabel.length; x++)
                 textlabel[x].innerHTML = "Grade Credit"
 
             console.debug("Switched Settings: Use Grade Credit")
@@ -281,8 +309,8 @@ calcdrop.onchange = function(){
 
         else {
             let textlabel = document.getElementsByClassName("changeable-calc")
-            
-            for (x = 0; x < textlabel.length;x++)
+
+            for (x = 0; x < textlabel.length; x++)
                 textlabel[x].innerHTML = "Final Mark"
 
             console.debug("Switched Settings: Use Final Mark")
@@ -295,26 +323,41 @@ calcdrop.onchange = function(){
 
 decreaseSemestersButton.classList.add("disabled")
 
+// Save & Load HotFix
+function saveCourses() {
+    let terms = getTerms();
+    let arr = [];
+    for (let i = 0; i < terms.length; i++) {
+        let subjects = terms[i].querySelectorAll(".subjects");
+        for (let j = 0; j < subjects.length; j++) {
+            let name = subjects[j].querySelector(".sub.textbox").innerHTML;
+            let hour = subjects[j].querySelector(".sub.textbox").innerHTML;
+        }
+    }
+}
 
-function incCourse(parentdiv){
+saveCourses();
+
+
+function incCourse(parentdiv) {
     const cloneCourse = curdiv.cloneNode(true)
     parentdiv.appendChild(cloneCourse)
     var textbox = cloneCourse.getElementsByClassName("textbox")
 
-    for (x = 0; x < textbox.length;x++)
+    for (x = 0; x < textbox.length; x++)
         textbox[x].value = ""
-    
+
     parentdiv.getElementsByClassName("lowerbuttonc")[0].classList.remove("disabled");
     console.debug("Adding Course")
 }
 
 
-function decCourse(parentdiv,but){
+function decCourse(parentdiv, but) {
     let subjects = parentdiv.getElementsByClassName("subjects")
 
     if (subjects.length === 1) {
         but.classList.add("disabled");
-        return 
+        return
     }
 
     if (subjects.length === 2)
@@ -326,14 +369,14 @@ function decCourse(parentdiv,but){
 
 let deferredPrompt = null;
 
-window.addEventListener('beforeinstallprompt', function(e) {
+window.addEventListener('beforeinstallprompt', function (e) {
     deferredPrompt = e;
     document.getElementById("installApp").classList.remove("off");
-    e.userChoice.then(function(choiceResult){
+    e.userChoice.then(function (choiceResult) {
         console.log(choiceResult.outcome);
-        if(choiceResult.outcome == 'dismissed'){
+        if (choiceResult.outcome == 'dismissed') {
             console.log('User cancelled home screen install');
-        }else{
+        } else {
             console.log('User added to home screen');
         }
     });
@@ -356,3 +399,55 @@ window.addEventListener('load', () => {
         }
     });
 })
+
+function loadCourses() {
+    const saved = JSON.parse(localStorage.getItem("savedCourses"));
+    if (!saved) return;
+
+    const { mode, data, semcount: savedCount } = saved;
+    calcdrop.value = mode;
+    calcdrop.onchange(); // trigger mode switch (Grade/Mark/Credit)
+
+    // Remove any extra semesters
+    while (getTerms().length > 1) {
+        document.getElementsByClassName("main-container")[0].lastChild.remove();
+    }
+
+    // Add semesters
+    semcount = 1;
+    for (let i = 1; i < savedCount; i++) {
+        increaseSemestersButton.onclick();
+    }
+
+    // Fill data
+    let terms = getTerms();
+    for (let i = 0; i < data.length; i++) {
+        const term = terms[i];
+        const parent = term.querySelector(".term-container");
+        const courses = data[i];
+
+        // Remove extra subjects first
+        let curSubjects = term.querySelectorAll(".subjects");
+        while (curSubjects.length > 1) {
+            curSubjects[curSubjects.length - 1].remove();
+            curSubjects = term.querySelectorAll(".subjects");
+        }
+
+        // Add as many as needed
+        for (let j = 1; j < courses.length; j++) {
+            incCourse(parent);
+        }
+
+        const subs = term.querySelectorAll(".subjects");
+        for (let j = 0; j < courses.length; j++) {
+            const s = subs[j];
+            s.querySelector(".sub.textbox").value = courses[j].name;
+            s.querySelector(".hour.textbox").value = courses[j].hour;
+            if (mode === "Grade")
+                s.querySelector(".dropdownG").value = courses[j].grade;
+            else
+                s.querySelector(".grade.textbox").value = courses[j].grade;
+        }
+    }
+}
+loadCourses();
