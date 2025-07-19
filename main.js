@@ -449,5 +449,6 @@ function loadCourses() {
                 s.querySelector(".grade.textbox").value = courses[j].grade;
         }
     }
+    getGPA();
 }
 loadCourses();
